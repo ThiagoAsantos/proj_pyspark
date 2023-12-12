@@ -1,2 +1,4 @@
 *.tar.gz
 *.tgz
+pg_data
+pyspark_data
