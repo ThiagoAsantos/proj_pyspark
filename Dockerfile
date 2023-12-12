@@ -4,13 +4,15 @@ FROM ubuntu:23.10
 # Atualize os pacotes do sistema
 RUN apt-get update && apt-get upgrade -y
 
-# Instale as dependências necessárias
-RUN apt-get install -y tar
+# Instale as dependências necessárias, incluindo o Python e o pip para Python
+RUN apt-get install -y tar python3 python3-pip
 
-# Crie uma pasta no conteiner
+# Crie uma pasta no contêiner
 RUN mkdir /opt/jdk
 
-# Copie o arquivo tar.gz do Java para o conteiner (assumindo que o arquivo está no mesmo diretório do Dockerfile)
+RUN mkdir /projetos
+
+# Copie o arquivo tar.gz do Java para o contêiner (assumindo que o arquivo está no mesmo diretório do Dockerfile)
 COPY ./data/jdk-17_linux-x64_bin.tar.gz /opt/
 
 # Descompacte o arquivo tar.gz do Java e renomeie a pasta para "jdk"
@@ -21,5 +23,17 @@ RUN tar -zxvf /opt/jdk-17_linux-x64_bin.tar.gz --strip-components=1 -C /opt/jdk 
 ENV JAVA_HOME /opt/jdk
 ENV PATH $JAVA_HOME/bin:$PATH
 
-# CMD para iniciar o shell bash
-CMD ["/bin/bash"]
+# Instale o pacote python3-venv para obter o módulo venv
+RUN apt-get install -y python3-venv
+
+# Crie um ambiente virtual
+RUN python3 -m venv /projetos
+
+# Defina o ambiente virtual como o ambiente de trabalho padrão
+WORKDIR /projetos
+
+# Instale o PySpark dentro do ambiente virtual
+RUN /projetos/bin/pip install pyspark
+
+# CMD para iniciar o PySpark automaticamente
+CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
