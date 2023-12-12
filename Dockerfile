@@ -33,7 +33,7 @@ RUN python3 -m venv /projetos
 WORKDIR /projetos
 
 # Instale o PySpark dentro do ambiente virtual
-RUN /projetos/bin/pip install pyspark
+RUN /projetos/bin/pip install pyspark==3.5.0
 
 # CMD para iniciar o PySpark automaticamente
 CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
