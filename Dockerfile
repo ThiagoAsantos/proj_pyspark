@@ -36,4 +36,4 @@ WORKDIR /projetos
 RUN /projetos/bin/pip install pyspark==3.5.0
 
 # CMD para iniciar o PySpark automaticamente
-CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
+#CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
