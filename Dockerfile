@@ -12,8 +12,14 @@ RUN mkdir /opt/jdk
 
 RUN mkdir /projetos
 
+RUN mkdir /projetos/jars
+
+RUN mkdir /projetos/tmp
+
 # Copie o arquivo tar.gz do Java para o contêiner (assumindo que o arquivo está no mesmo diretório do Dockerfile)
-COPY ./data/jdk-17_linux-x64_bin.tar.gz /opt/
+COPY ./jars/jdk-17_linux-x64_bin.tar.gz /opt/
+
+COPY ./jars/postgresql-42.7.1.jar /projetos/jars/
 
 # Descompacte o arquivo tar.gz do Java e renomeie a pasta para "jdk"
 RUN tar -zxvf /opt/jdk-17_linux-x64_bin.tar.gz --strip-components=1 -C /opt/jdk \
@@ -36,4 +42,4 @@ WORKDIR /projetos
 RUN /projetos/bin/pip install pyspark==3.5.0
 
 # CMD para iniciar o PySpark automaticamente
-#CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
+# CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
