@@ -7,7 +7,7 @@ RUN apt-get update && apt-get upgrade -y
 # Instale as dependências necessárias, incluindo o Python e o pip para Python
 RUN apt-get install -y tar python3 python3-pip
 
-# Crie uma pasta no contêiner
+# Crie as pasta no contêiner
 RUN mkdir /opt/jdk
 
 RUN mkdir /projetos
@@ -40,6 +40,3 @@ WORKDIR /projetos
 
 # Instale o PySpark dentro do ambiente virtual
 RUN /projetos/bin/pip install pyspark==3.5.0
-
-# CMD para iniciar o PySpark automaticamente
-# CMD ["/projetos/bin/bash", "-c", "source bin/activate && pyspark"]
